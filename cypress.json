@@ -1,6 +1,8 @@
 {
-  "defaultCommandTimeout": 10000,
+  "baseUrl": "https://www.stayatmomos.com/",
+  "defaultCommandTimeout": 20000,
   "viewportHeight": 1080,
   "viewportWidth": 1920,
-  "projectId": "zf5nc9"
+  "projectId": "zf5nc9",
+  "chromeWebSecurity": false
 }
