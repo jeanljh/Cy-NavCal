@@ -23,3 +23,8 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getDays', id => cy.get('.DayPicker-Body').eq(id).find('.DayPicker-Day')
+.not('[class*=disabled]').not('[class*=outside]').as('arriveDays'))
+
+Cypress.Commands.add('getMonthHeader', id => cy.get('.DayPicker-Caption > div').eq(id).invoke('text'))

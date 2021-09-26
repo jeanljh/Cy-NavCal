@@ -8,18 +8,23 @@ describe('Dual Calendar Navigation', () => {
         cy.get('span.close-cpp').click()
         cy.get("[class*='desktopNav__bookNow']").click()
     })
-    it('Test 1', () => {
-        cy.get('.DayPicker-Body').as('dayPickers').eq(0).get('.DayPicker-Day').not('[class*=disabled]').as('arriveDays')
-        cy.get('@dayPickers').eq(1).get('.DayPicker-Day').not('[class*=disabled]').as('departDays')
-        // cy.get('._49_rs').its('0.contentDocument.body').should('not.be.empty')
+    it('Test Default Calendar State', () => {
+        const today = new Date()
+        const arriveMonth = today.toLocaleDateString('default', {month:'long', year: 'numeric'})
+        // verify arrive month/year header
+        cy.getMonthHeader(0).should('eq', arriveMonth)
+
+        // verify pre-selected today and tomorrow
+        cy.getDays(0).eq(0).invoke('text').should('eq', new Date().getDate().toString())
+        cy.getDays(0).eq(1).invoke('text').should('eq', (new Date().getDate() + 1) + '')
         
-
-        // cy.get('._49_rs').then(cy.wrap).as('aaa').should('not.be.null')
-        // cy.get('._49_rs').then(e => {
-        //     const body = e.contents().find('body')
-        //     cy.wrap(body).as('iframe')
-        // })
-
-        // cy.get('@iframe').find('#check-in').click()
+        today.setMonth(today.getMonth() + 1, 1)
+        const departMonth = today.toLocaleDateString('default', {month:'long', year:'numeric'})
+        // verify depart month/year header
+        cy.getMonthHeader(1).should('eq', departMonth)
+        
+        // verify visibility of previous and next month buttons
+        cy.get('.DayPicker-NavButton--prev').should('not.be.visible')
+        cy.get('.DayPicker-NavButton--next').should('be.visible')
     })
 })
