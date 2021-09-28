@@ -28,8 +28,8 @@ describe('Dual Calendar Navigation', () => {
         cy.get('.DayPicker-NavButton--next').should('be.visible')
     })
     it.only('Test Calendar Navigation', () => {
-        let arriveDate = '2022,2,1'
-        let departDate = '2022,2,10'
+        let arriveDate = '2022,4,20'
+        let departDate = '2022,5,1'
         const today = new Date()
         const arriveDt = new Date(arriveDate)
         const departDt = new Date(departDate)
@@ -37,9 +37,9 @@ describe('Dual Calendar Navigation', () => {
         expect(arriveDt).to.gte(today)
         cy.selectDate2(arriveDt)
         cy.selectDate2(departDt)
-        cy.log('=================================')
-        const backDate = new Date('2021,11,10')
-        cy.selectDate2(backDate)
+        // cy.selectCal(departDt)
+        // cy.selectDate2(arriveDt, true, 0)
+        // cy.getDays2().filter('[class$=selected]').its('length').then(cy.log)
         // cy.get('.DayPicker-Body').find('.DayPicker-Day').not('[class*=disabled]').not('[class*=outside]')
         // .each(e => {
         //     e.attr

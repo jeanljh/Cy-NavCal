@@ -26,7 +26,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('getDays', id => cy.get('.DayPicker-Body').eq(id).find('.DayPicker-Day')
-    .not('[class*=disabled]').not('[class*=outside]').as('arriveDays'))
+    .not('[class*=disabled]').not('[class*=outside]'))
 
 Cypress.Commands.add('getDays2', () => cy.get('.DayPicker-Body').find('.DayPicker-Day')
     .not('[class*=disabled]').not('[class*=outside]'))
@@ -52,30 +52,66 @@ Cypress.Commands.add('selectDate', (date) => {
 })
 
 Cypress.Commands.add('selectDate2', (date) => {
-    cy.getDays2().first().invoke('attr', 'aria-label').then(d => {
-        const dt1 = new Date(d)
-        if (date < dt1) {
-            cy.log('here1')
+    cy.getDays2().then(d => {
+        const firstCal = new Date(d.first().attr('aria-label'))
+        const lastCal = new Date(d.last().attr('aria-label'))
+        if (date >= firstCal && date <= lastCal) {
+            cy.getDays2().each(d => {
+                const dt = new Date(d.attr('aria-label'))
+                if (dt.getMonth() === date.getMonth() && dt.getDate() === date.getDate()) {
+                    cy.wrap(d).click()
+                    return false
+                }
+            })
+        }
+        else if (date < firstCal) {
             cy.get('.DayPicker-NavButton--prev').should('be.visible').click()
             cy.selectDate2(date)
-            return
         }
-    })
-    cy.getDays2().last().invoke('attr', 'aria-label').then(d => {
-        const dt2 = new Date(d)
-        if (date > dt2) {
-            cy.log('here2')
+        else if (date > lastCal) {
             cy.get('.DayPicker-NavButton--next').should('be.visible').click()
             cy.selectDate2(date)
-            return
         }
     })
+
+    // cy.log(date + '')
+    // cy.getDays2().first().invoke('attr', 'aria-label').then(d => {
+    //     cy.log(d)
+    //     const dt1 = new Date(d)
+    //     if (date < dt1) {
+    //         cy.log('here1')
+    //         cy.get('.DayPicker-NavButton--prev').should('be.visible').click()
+    //         cy.selectDate2(date)
+    //         // return
+    //     }
+    // })
+    // cy.getDays2().last().invoke('attr', 'aria-label').then(d => {
+    //     cy.log(d)
+    //     const dt2 = new Date(d)
+    //     if (date > dt2) {
+    //         cy.log('here2')
+    //         cy.get('.DayPicker-NavButton--next').should('be.visible').click()
+    //         cy.selectDate2(date)
+    //         // return
+    //     }
+    // })
+    // cy.getDays2().its('length').then(c => cy.log('count = ' + c))
+    // cy.getDays2().each(d => {
+    //     const dt = new Date(d.attr('aria-label'))
+    //     if (dt.getMonth() === date.getMonth() && dt.getDate() === date.getDate()) {
+    //         cy.log('here3')
+    //         cy.log(dt + '')
+    //         cy.log('dateeeeee = ' + date)
+    //         cy.wrap(d).click()
+    //         return false
+    //     }
+    // })
+})
+
+Cypress.Commands.add('selectCal', date => {
     cy.getDays2().each(d => {
         const dt = new Date(d.attr('aria-label'))
-        // cy.log(dt + '')
-        // cy.log('dateeeeee = ' + date)
         if (dt.getMonth() === date.getMonth() && dt.getDate() === date.getDate()) {
-            cy.log('here3')
             cy.wrap(d).click()
             return false
         }
