@@ -4,5 +4,9 @@
   "viewportHeight": 1080,
   "viewportWidth": 1920,
   "projectId": "zf5nc9",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "env": {
+    "urlDualCal": "https://www.stayatmomos.com/",
+    "urlSingleCal": ""
+  }
 }

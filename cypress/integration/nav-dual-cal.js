@@ -2,7 +2,7 @@
 
 describe('Dual Calendar Navigation', () => {
     beforeEach('Visit URL', () => {
-        cy.visit('');
+        cy.visit(Cypress.env('urlDualCal'));
         cy.url().should('eq', Cypress.config().baseUrl)
         cy.title().should('contains', "Boutique Hotel KL | MoMo's Kuala Lumpur - Homepage | New Hotel in KL")
         cy.get('span.close-cpp').click()
@@ -28,23 +28,21 @@ describe('Dual Calendar Navigation', () => {
         cy.get('.DayPicker-NavButton--next').should('be.visible')
     })
     it.only('Test Calendar Navigation', () => {
-        let arriveDate = '2022,4,20'
-        let departDate = '2022,5,1'
-        const today = new Date()
-        const arriveDt = new Date(arriveDate)
-        const departDt = new Date(departDate)
-        expect(departDt).to.gt(arriveDt)
-        expect(arriveDt).to.gte(today)
-        cy.selectDate2(arriveDt)
-        cy.selectDate2(departDt)
-        // cy.selectCal(departDt)
-        // cy.selectDate2(arriveDt, true, 0)
-        // cy.getDays2().filter('[class$=selected]').its('length').then(cy.log)
-        // cy.get('.DayPicker-Body').find('.DayPicker-Day').not('[class*=disabled]').not('[class*=outside]')
-        // .each(e => {
-        //     e.attr
-        // })
-        // arriveDate = arriveDt.toLocaleDateString('default', {day: 'numeric', month: 'long', year: 'numeric'})
-        // departDate = departDt.toLocaleDateString('default', {day: 'numeric', month: 'long', year: 'numeric'})
+        // get test data from from dualCal.json
+        cy.fixture('dualCal').then(d => {
+            const today = new Date()
+            const arriveDt = new Date(d.arriveDate)
+            const departDt = new Date(d.departDate)
+            
+            // verify depart date is after arrive date
+            expect(departDt).to.gt(arriveDt)
+            
+            // verify arrive date is from today onwards
+            expect(arriveDt).to.gte(today)
+
+            // select arrive date and depart date
+            cy.selectDate(arriveDt)
+            cy.selectDate(departDt)
+        })
     })
 })
