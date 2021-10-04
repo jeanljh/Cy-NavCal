@@ -26,8 +26,8 @@
 
 // navigate calendar to next month until it matches input month and year
 Cypress.Commands.add('navCal', sDate => {
-    cy.get("[role='heading'] > strong").then(e => {
-        if (e.text() !== sDate) {
+    cy.get("[role='heading'] > strong").invoke('text').then(t => {
+        if (t !== sDate) {
             cy.get('.btn-sm.pull-right').click()
             cy.navCal(sDate)
         }
