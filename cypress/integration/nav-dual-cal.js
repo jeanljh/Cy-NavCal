@@ -5,7 +5,7 @@ describe('Dual Calendar Navigation', () => {
         cy.visit(Cypress.env('urlDualCal'));
         cy.url().should('eq', Cypress.config().baseUrl)
         cy.title().should('contains', "Boutique Hotel KL | MoMo's Kuala Lumpur - Homepage | New Hotel in KL")
-        cy.get('span.close-cpp').click()
+        // cy.get('span.close-cpp').click()
         cy.get("[class*='desktopNav__bookNow']").click()
     })
     it('Test Default Calendar State', () => {
