@@ -1,7 +1,7 @@
 {
   "name": "jean",
   "version": "1.0.0",
-  "description": "calendar navigation",
+  "description": "calendar navigation test automation",
   "main": "index.js",
   "scripts": {
     "test-cy-db": "npx cypress run --headed --record --key 904345b5-e496-4f22-97a5-fdff257daf11"
