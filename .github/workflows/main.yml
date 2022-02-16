@@ -20,6 +20,10 @@ jobs:
       - name: Checkout
       - uses: actions/checkout@v2
       
+      - name: Install Cypress
+      - run:
+          npm ci
+
       - name: Cypress.io
       - uses: cypress-io/github-action@v2.9.7
       - with: 
