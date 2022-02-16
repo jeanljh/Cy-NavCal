@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cypress run --headed --record --key 904345b5-e496-4f22-97a5-fdff257daf11",
-    "start": "npx cypress run"
+    "test2": "npx cypress run"
   },
   "author": "jean",
   "license": "ISC",
