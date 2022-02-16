@@ -27,12 +27,12 @@ context('Dropdown Calendar Navigation', () => {
         cy.get('@picker').should('have.value', todayDate)
     })
 
-    specify.only('Test Clear Date', () => {
+    specify('Test Clear Date', () => {
         cy.get('.picker__input').as('picker').click()
         cy.get('.picker__day--highlighted').click()
         cy.get('@picker').click()
         cy.get('.picker__button--clear').click({force: true})
-        cy.get('@picker').should('have.value', tmrDate)
+        cy.get('.picker__input--target').should('have.value', tmrDate)
     })
 
     specify('Test Close Date Picker', () => {
