@@ -136,13 +136,3 @@ Cypress.Commands.add('selectDatePicker', sDate => {
     const result = day.padStart(2, '0') + '/' + (dt.getMonth() + 1 + '/').padStart(3, '0') + year
     cy.get('@picker').should('have.value', result)
 })
-
-// Cypress.Commands.add('selectCal', date => {
-//     cy.getDays().each(d => {
-//         const dt = new Date(d.attr('aria-label'))
-//         if (dt.getMonth() === date.getMonth() && dt.getDate() === date.getDate()) {
-//             cy.wrap(d).click()
-//             return false
-//         }
-//     })
-// })
