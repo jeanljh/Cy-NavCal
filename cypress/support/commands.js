@@ -79,6 +79,63 @@ Cypress.Commands.add('selectDate2', date => {
     })
 })
 
+// navigate calendar to next month until it matches input month and year
+Cypress.Commands.add('navCal', sDate => {
+    cy.get(".react-datepicker__current-month").invoke('text').then(t => {
+        if (t !== sDate) {
+            cy.get("button[class$='navigation--next']").click()
+            cy.navCal(sDate)
+        }
+    })
+})
+
+// select from calendar with year and month dropdown
+Cypress.Commands.add('selectDatePicker', sDate => {
+    const dt = new Date(sDate)
+    const year = dt.getFullYear().toString()
+    const month = dt.getMonth().toString()
+    const day = dt.getDate().toString()
+    
+    // validate and select year
+    cy.get('.date_div').as('picker').click()
+    cy.get('.picker__select--year').as('year').find('option').should('contain.text', year)
+    cy.get('@year').select(year)
+    cy.get('@year').find(':selected').should('have.text', year)
+
+    // validate and select month
+    // cy.get('.picker__select--month').as('month').find(':not(option[disabled])').invoke('text')
+    cy.get('.picker__select--month').as('month').find('option').not(':disabled')
+    .then(el => {
+        let match = false
+        for (const e of el) {
+            if (e.getAttribute('value') === month) {
+                match = true
+                break
+            }
+        }
+        expect(match).to.be.true
+    })
+    cy.get('@month').select(month)
+    cy.get('@month').find(':selected').should('have.prop', 'value', month)
+
+    // validate and select day
+    cy.get(".picker__table div:not([class*='disabled'],[class*='outfocus'])")
+    .then(el => {
+        let match = false
+        for (const e of el) {
+            if (e.textContent === day) {
+                e.click()
+                match = true
+                break
+            }
+        }
+        expect(match).to.be.true
+    })
+
+    // validate selected date
+    const result = day.padStart(2, '0') + '/' + (dt.getMonth() + 1 + '/').padStart(3, '0') + year
+    cy.get('@picker').should('have.value', result)
+})
 
 // Cypress.Commands.add('selectCal', date => {
 //     cy.getDays().each(d => {
