@@ -32,8 +32,7 @@ context('Dropdown Calendar Navigation', () => {
         cy.get('.picker__day--highlighted').click()
         cy.get('@picker').click()
         cy.get('.picker__button--clear').click({force: true})
-        cy.wait(1000)
-        cy.get('@picker').should('have.value', tmrDate)
+        cy.get('.date_div').should('have.value', tmrDate)
     })
 
     specify('Test Close Date Picker', () => {
