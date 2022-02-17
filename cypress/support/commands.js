@@ -133,6 +133,5 @@ Cypress.Commands.add('selectDatePicker', sDate => {
     })
 
     // validate selected date
-    const result = day.padStart(2, '0') + '/' + (dt.getMonth() + 1 + '/').padStart(3, '0') + year
-    cy.get('@picker').should('have.value', result)
+    cy.get('@picker').should('have.value', dt.toLocaleDateString('en-GB'))
 })
