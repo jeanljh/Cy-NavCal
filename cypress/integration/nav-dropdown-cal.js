@@ -27,7 +27,7 @@ context('Dropdown Calendar Navigation', () => {
         cy.get('@picker').should('have.value', todayDate)
     })
 
-    specify('Test Clear Date', () => {
+    xspecify('Test Clear Date', () => {
         cy.get('.picker__input').as('picker').click()
         cy.get('.picker__day--highlighted').click()
         cy.get('@picker').click()
