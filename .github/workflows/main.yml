@@ -26,7 +26,7 @@ jobs:
           browser: chrome
           parallel: true
           record: true
-          group: Cypress Dashboard
+          group: Navigate Calendar
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
