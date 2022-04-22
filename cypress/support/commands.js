@@ -44,17 +44,17 @@ Cypress.Commands.add('selectDate', date => {
             cy.getDays().each(d => {
                 const dt = new Date(d.attr('aria-label'))
                 if (dt.getMonth() === date.getMonth() && dt.getDate() === date.getDate()) {
-                    cy.wrap(d).click()
+                    cy.wrap(d).click({force: true})
                     return false
                 }
             })
         }
         else if (date < firstCal) {
-            cy.get('.DayPicker-NavButton--prev').should('be.visible').click()
+            cy.get('.DayPicker-NavButton--prev').should('be.visible').click({force: true})
             cy.selectDate(date)
         }
         else if (date > lastCal) {
-            cy.get('.DayPicker-NavButton--next').should('be.visible').click()
+            cy.get('.DayPicker-NavButton--next').should('be.visible').click({force: true})
             cy.selectDate(date)
         }
     })
