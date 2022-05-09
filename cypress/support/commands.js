@@ -40,16 +40,7 @@ Cypress.Commands.add('selectDate', date => {
     cy.getDays().then(d => {
         const firstCal = new Date(d.first().attr('aria-label'))
         const lastCal = new Date(d.last().attr('aria-label'))
-        if (date >= firstCal && date <= lastCal) {
-            cy.getDays().each(d => {
-                const dt = new Date(d.attr('aria-label'))
-                if (dt.getMonth() === date.getMonth() && dt.getDate() === date.getDate()) {
-                    cy.wrap(d).click({force: true})
-                    return false
-                }
-            })
-        }
-        else if (date < firstCal) {
+        if (date < firstCal) {
             cy.get('.DayPicker-NavButton--prev').should('be.visible').click({force: true})
             cy.selectDate(date)
         }
@@ -57,6 +48,13 @@ Cypress.Commands.add('selectDate', date => {
             cy.get('.DayPicker-NavButton--next').should('be.visible').click({force: true})
             cy.selectDate(date)
         }
+        cy.getDays().each(d => {
+            const dt = new Date(d.attr('aria-label'))
+            if (dt.getMonth() === date.getMonth() && dt.getDate() === date.getDate()) {
+                cy.wrap(d).click({force: true})
+                return false
+            }
+        })
     })
 })
 
